@@ -13,12 +13,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.codizer.component.ExampleComponent;
 import com.codizer.model.Person;
+import com.codizer.service.ExampleService;
 
 @Controller
 @RequestMapping("/example")
 public class ExampleController {
 	
 	public static final String EXAMPLE_VIEW = "example";
+	
+	// Inyectar servicio Bean
+	@Autowired
+	@Qualifier("exampleService")
+	private ExampleService exampleService; // Se llama a la interface
 	
 	// Indica a Spring que vamos a inyectar un componente que se encuatra en su memoria
 	@Autowired
@@ -32,7 +38,7 @@ public class ExampleController {
 	@GetMapping("/exampleString")
 	public String exampleString(Model model) {
 		exampleComponent.sayHello();
-		model.addAttribute("people", this.getPeople());
+		model.addAttribute("people", exampleService.getListPeople());
 		return EXAMPLE_VIEW;
 	}
 	
@@ -40,19 +46,9 @@ public class ExampleController {
 	@GetMapping("/exampleMAV")
 	public ModelAndView exampleMAV() {
 		ModelAndView mav = new ModelAndView(EXAMPLE_VIEW);
-		mav.addObject("people", this.getPeople());
+		mav.addObject("people", exampleService.getListPeople());
 		
 		return mav;
 	}
 	
-	private List<Person> getPeople() {
-		
-		List<Person> people = new ArrayList<>();
-		people.add(new Person("Jhon", 23));
-		people.add(new Person("Mikel", 30));
-		people.add(new Person("Eva", 43));
-		people.add(new Person("Peter", 18));
-		
-		return people;
-	}
 }
