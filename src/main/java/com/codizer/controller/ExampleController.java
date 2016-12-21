@@ -3,12 +3,15 @@ package com.codizer.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.codizer.component.ExampleComponent;
 import com.codizer.model.Person;
 
 @Controller
@@ -17,12 +20,18 @@ public class ExampleController {
 	
 	public static final String EXAMPLE_VIEW = "example";
 	
+	// Indica a Spring que vamos a inyectar un componente que se encuatra en su memoria
+	@Autowired
+	@Qualifier("exampleComponent") // Le indica a Spring el nombre del Bean que está en memoria
+	private ExampleComponent exampleComponent;
+	
 	// En la version SPRING 4.2
 	// @RequestMapping(value="/exampleString", method=RequestMethod.GET)
 	
 	// Primera forma para insertar pocos datos
 	@GetMapping("/exampleString")
 	public String exampleString(Model model) {
+		exampleComponent.sayHello();
 		model.addAttribute("people", this.getPeople());
 		return EXAMPLE_VIEW;
 	}
