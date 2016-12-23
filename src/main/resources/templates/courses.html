@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Courses</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Price</th>
+				<th>Hours</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="course : ${courses}">
+				<td><span th:text="${course.name}"></span></td>
+				<td><span th:text="${course.description}"></span></td>
+				<td><span th:text="${course.price}"></span></td>
+				<td><span th:text="${course.hours}"></span></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
